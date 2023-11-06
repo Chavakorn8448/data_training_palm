@@ -1,54 +1,32 @@
-import cv2
+from PIL import Image, ImageEnhance
+import os
 
-# Function to annotate an image with bounding boxes and save it
-def annotate_image(image_path, annotations_path, output_path):
-    # Load the image
-    image = cv2.imread(image_path)
-    clone = image.copy()
+def adjust_exposure(input_folder, output_folder, factor=1.5):
+    # Ensure the output folder exists
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
 
-    # Create an empty list to store bounding box coordinates
-    bounding_boxes = []
+    # List all image files in the input folder
+    image_files = [f for f in os.listdir(input_folder) if f.lower().endswith(('.jpg', '.jpeg', '.png', '.gif', '.bmp'))]
 
-    # Callback function for mouse events
-    def draw_rectangle(event, x, y, flags, param):
-        nonlocal bounding_boxes
+    for image_file in image_files:
+        input_path = os.path.join(input_folder, image_file)
+        output_path = os.path.join(output_folder, image_file)
 
-        if event == cv2.EVENT_LBUTTONDOWN:
-            bounding_boxes.append((x, y))
-        elif event == cv2.EVENT_LBUTTONUP:
-            if len(bounding_boxes) == 1:
-                x0, y0 = bounding_boxes[0]
-                x1, y1 = x, y
-                cv2.rectangle(clone, (x0, y0), (x1, y1), (0, 255, 0), 2)
-                bounding_boxes[-1] = (x0, y0, x1, y1)
-            cv2.imshow("Annotate Image", clone)
+        # Open the image using Pillow
+        image = Image.open(input_path)
 
-    # Create a window and set the mouse event callback
-    cv2.namedWindow("Annotate Image")
-    cv2.setMouseCallback("Annotate Image", draw_rectangle)
+        # Adjust the exposure
+        enhancer = ImageEnhance.Brightness(image)
+        enhanced_image = enhancer.enhance(factor)
 
-    # Display the image and wait for user interaction
-    cv2.imshow("Annotate Image", clone)
-    cv2.waitKey(0)
-
-    # Save the bounding box annotations
-    with open(annotations_path, "w") as file:
-        for box in bounding_boxes:
-            file.write(f"{box[0]},{box[1]},{box[2]},{box[3]}\n")
-
-    # Draw bounding boxes on the image and save it
-    for box in bounding_boxes:
-        x0, y0, x1, y1 = box
-        cv2.rectangle(image, (x0, y0), (x1, y1), (0, 255, 0), 2)
-
-    cv2.imwrite(output_path, image)
-
-    # Close the window
-    cv2.destroyAllWindows()
+        # Save the adjusted image to the output folder
+        print("add")
+        enhanced_image.save(output_path)
 
 if __name__ == "__main__":
-    image_path = "25_4.jpg"  # Replace with the path to your image
-    annotations_path = "annotations.txt"  # Replace with the annotations file path
-    output_path = "annotated_image.jpg"  # Replace with the desired output image path
+    input_folder = "data_set/new_test_set/almostripe"  # Replace with the path to your input folder
+    output_folder = "data_set/new_test_set/expo_almostripe"  # Replace with the path to your output folder
+    exposure_factor = 1.5  # Adjust this value to control exposure (1.0 means no change)
 
-    annotate_image(image_path, annotations_path, output_path)
+    adjust_exposure(input_folder, output_folder, exposure_factor)
