@@ -1,0 +1,15 @@
+names:
+- '4'
+- almost
+- ripe
+- unripe
+nc: 4
+roboflow:
+  license: CC BY 4.0
+  project: the_palm_killer
+  url: https://universe.roboflow.com/cmkl/the_palm_killer/dataset/3
+  version: 3
+  workspace: cmkl
+test: ../test/images
+train: the_palm_killer-3/train/images
+val: the_palm_killer-3/valid/images
