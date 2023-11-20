@@ -1,0 +1,13 @@
+names:
+- Ripefruit
+- Unripe
+nc: 2
+roboflow:
+  license: CC BY 4.0
+  project: image-detection-d4en0
+  url: https://universe.roboflow.com/malam-present-lroit/image-detection-d4en0/dataset/1
+  version: 1
+  workspace: malam-present-lroit
+test: ../test/images
+train: Image-detection-1/train/images
+val: Image-detection-1/valid/images

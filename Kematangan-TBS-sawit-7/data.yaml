@@ -1,0 +1,15 @@
+names:
+- fraksi 00
+- fraksi 1
+- fraksi 3
+- fraksi 4
+nc: 4
+roboflow:
+  license: CC BY 4.0
+  project: kematangan-tbs-sawit
+  url: https://universe.roboflow.com/deteksi-objek-tbs/kematangan-tbs-sawit/dataset/7
+  version: 7
+  workspace: deteksi-objek-tbs
+test: ../test/images
+train: Kematangan-TBS-sawit-7/train/images
+val: Kematangan-TBS-sawit-7/valid/images

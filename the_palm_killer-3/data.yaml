@@ -1,9 +1,8 @@
 names:
-- '4'
 - almost
 - ripe
 - unripe
-nc: 4
+nc: 3
 roboflow:
   license: CC BY 4.0
   project: the_palm_killer
