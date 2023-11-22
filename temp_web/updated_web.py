@@ -3,6 +3,7 @@ from flask import Flask, request, render_template, send_from_directory, redirect
 from PIL import Image, ImageEnhance
 import torch
 import os
+from ultralytics import YOLO
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -12,10 +13,12 @@ UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # Path to YOLO model
-MODEL_PATH = 'C:/Users/ChavakornArunkunarax/Documents/data_training_palm/yolov8n.pt'
+# MODEL_PATH = 'C:/Users/ChavakornArunkunarax/Documents/data_training_palm/runs/detect/train3/weights/best.pt'
 
 # Load YOLO model
-model = torch.hub.load('ultralytics/yolov5', 'custom', path=MODEL_PATH)
+# model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt', force_reload=False)
+model = YOLO('yolov8n.pt')
+model = YOLO('best2.pt')
 
 # Image processing functions
 def resize_and_crop_image(img, target_pixels=8e6):
@@ -53,21 +56,39 @@ def upload_file():
             img_enhanced.save(processed_filename)
 
             # Run YOLO model on the processed image
-            results = model(processed_filename)
-            results.save(UPLOAD_FOLDER)
+            # results = model(processed_filename)
+            # results.save(UPLOAD_FOLDER)
+            model.predict(processed_filename, save=True, project="uploads", name="test", exist_ok=True)
 
             # Redirect to the annotated image display page
             return redirect(url_for('display_image', filename='processed_' + file.filename))
 
     return render_template('upload.html')
 
+# @app.route('/display/<filename>')
+# def display_image(filename):
+#     annotated_image_folder = 'test/'
+#     return render_template('display.html', filename= annotated_image_folder + filename)
+
 @app.route('/display/<filename>')
 def display_image(filename):
+    annotated_image_path = os.path.join(UPLOAD_FOLDER, 'test', filename)
+    web_compatible_path = annotated_image_path.replace('\\', '/')
+
+    print("Path for web:", web_compatible_path)
     return render_template('display.html', filename=filename)
 
-@app.route('/uploads/<filename>')
+# @app.route('/uploads/<filename>')
+# def uploaded_file(filename):
+#     return send_from_directory(UPLOAD_FOLDER, filename)
+
+@app.route('/uploads/test/<filename>')
 def uploaded_file(filename):
-    return send_from_directory(UPLOAD_FOLDER, filename)
+    # No need to join 'test' again if UPLOAD_FOLDER already contains 'uploads/test'
+    print("here is the filename:", filename)    
+    return send_from_directory(filename)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
