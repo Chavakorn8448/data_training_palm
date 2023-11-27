@@ -1,7 +1,7 @@
 import os
 
 # Directory path
-dir_path = 'week_6_unripe'
+dir_path = 'week_9_almost_clean'
 
 # Iterate over each file in the directory
 for filename in os.listdir(dir_path):
@@ -14,7 +14,7 @@ for filename in os.listdir(dir_path):
         base, ext = os.path.splitext(filename)
         
         # Construct the new name
-        new_name = base + '_6' + ext
+        new_name = base + '_9' + ext
         
         # Get the new absolute path
         new_filepath = os.path.join(dir_path, new_name)

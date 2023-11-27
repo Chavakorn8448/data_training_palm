@@ -8,7 +8,12 @@
 # # Train the model
 # results = model.train(data='the_palm_killer-2', epochs=100, imgsz=64)
 
+# from roboflow import Roboflow
+# rf = Roboflow(api_key="IlGXEoFFKWJTkBTDU7Pp")
+# project = rf.workspace("cmkl").project("the_palm_killer")
+# dataset = project.version(4).download("yolov5")
+
 from roboflow import Roboflow
 rf = Roboflow(api_key="IlGXEoFFKWJTkBTDU7Pp")
 project = rf.workspace("cmkl").project("the_palm_killer")
-dataset = project.version(4).download("yolov5")
+dataset = project.version(5).download("yolov8")
