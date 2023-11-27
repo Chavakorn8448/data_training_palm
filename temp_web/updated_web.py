@@ -18,7 +18,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 # Load YOLO model
 # model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt', force_reload=False)
 model = YOLO('yolov8n.pt')
-model = YOLO('best2.pt')
+model = YOLO('best.pt')
 
 # Image processing functions
 def resize_and_crop_image(img, target_pixels=8e6):
@@ -82,11 +82,15 @@ def display_image(filename):
 # def uploaded_file(filename):
 #     return send_from_directory(UPLOAD_FOLDER, filename)
 
+# @app.route('/uploads/test/<filename>')
+# def uploaded_file(filename):
+#     # No need to join 'test' again if UPLOAD_FOLDER already contains 'uploads/test'
+#     print("here is the filename:", filename)    
+#     return send_from_directory(UPLOAD_FOLDER, filename)
+
 @app.route('/uploads/test/<filename>')
 def uploaded_file(filename):
-    # No need to join 'test' again if UPLOAD_FOLDER already contains 'uploads/test'
-    print("here is the filename:", filename)    
-    return send_from_directory(filename)
+    return send_from_directory(os.path.join(UPLOAD_FOLDER, 'test'), filename)
 
 
 

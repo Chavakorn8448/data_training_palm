@@ -1,4 +1,4 @@
-
+<!-- 
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,4 +12,81 @@
         <input type="submit" value="Upload">
     </form>
 </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>The Palm Killer</title>
+</head>
+<body>
+    <div class="wrapper">
+        <h1 class="title">The Palm Killer</h1>
+        <div class="upload-container">
+            <p class="instructions">Take or upload a picture of the Oil Palm Fruit</p>
+            <form action="/" method="post" enctype="multipart/form-data" class="upload-form">
+                <input type="file" name="file" id="file" class="file-input" hidden>
+                <div class="file-input-container">
+                    <label for="file" class="file-upload-label">Choose file</label>
+                    <span id="file-name">No file chosen</span>
+                </div>
+                <button type="submit" class="upload-btn">Upload</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var fileInput = document.getElementById('file');
+            var fileNameDisplay = document.getElementById('file-name');
+
+            fileInput.addEventListener('change', function () {
+                fileNameDisplay.textContent = fileInput.files.length > 0 ? fileInput.files[0].name : 'No file chosen';
+            });
+        });
+    </script>
+</body>
 </html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>The Palm Killer</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>The Palm Killer</h1>
+        </header>
+        <main>
+            <p class="instructions">Take or upload a picture of the Oil Palm Fruit</p>
+            <form action="/" method="post" enctype="multipart/form-data" class="upload-form">
+                <div class="file-input-container">
+                    <label for="file-upload" class="file-upload-label">Choose file</label>
+                    <span id="file-name">No file chosen</span>
+                </div>
+                <button type="submit" class="upload-btn">Upload</button>
+            </form>
+        </main>
+    </div>
+    <script>
+        const fileInput = document.getElementById('file');
+        const fileChosen = document.getElementById('file-chosen');
+        
+        fileInput.addEventListener('change', function() {
+          fileChosen.textContent = this.files[0].name
+        })
+    </script>
+</body>
+</html> -->
+
+
+
+
+
